@@ -120,8 +120,7 @@ func (d *decoder) decode() error {
 				tok = data
 			}
 			if !someFieldExist {
-				continue
-				//return fmt.Errorf("struct field for %q doesn't exist in any of %v places to unmarshal", key, len(d.vs))
+				return fmt.Errorf("struct field for %q doesn't exist in any of %v places to unmarshal", key, len(d.vs))
 			} else {
 				// We've just consumed the current token, which was the key.
 				// Read the next token, which should be the value, and let the rest of code process it.
