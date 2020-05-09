@@ -113,14 +113,14 @@ func (d *decoder) decode() error {
 				}
 				d.vs[i] = append(d.vs[i], f)
 			}
+			if !someFieldExist {
+				return fmt.Errorf("struct field for %q doesn't exist in any of %v places to unmarshal", key, len(d.vs))
+			}
 			if rawMessage {
 				// Read the next complete object from the json stream
 				var data json.RawMessage
 				d.tokenizer.Decode(&data)
 				tok = data
-			}
-			if !someFieldExist {
-				return fmt.Errorf("struct field for %q doesn't exist in any of %v places to unmarshal", key, len(d.vs))
 			} else {
 				// We've just consumed the current token, which was the key.
 				// Read the next token, which should be the value, and let the rest of code process it.
